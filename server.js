@@ -1,6 +1,8 @@
 // Budget API
 
 const express = require("express");
+const fs = require("fs");
+const path = require("path");
 const cors = require("cors");
 const app = express();
 const port = 3000;
@@ -30,6 +32,15 @@ app.get("/hello-world", (req, res) => {
 
 app.get("/budget", (req, res) => {
   res.json(budget);
+});
+
+app.get("/new-budget-endpoint", (req, res) => {
+  fs.readFile("budget.json", "utf8", (err, data) => {
+    if (err) {
+      return res.status(500).json({ error: "Failed to read budget data" });
+    }
+    res.json(JSON.parse(data));
+  });
 });
 
 app.listen(port, () => {

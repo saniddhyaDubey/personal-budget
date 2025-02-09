@@ -128,7 +128,10 @@
                             "#ff6384",
                             "#36a2eb",
                             "#fd6b19",
-                        ],
+                            "#4bc0c0",
+                            "#9966ff",
+                            "#ff9f40"
+                        ]
                     },
                 ],
                 labels: [],
@@ -143,14 +146,17 @@
             }
 
             function getPersonalBudget() {
-                axios.get("http://localhost:3000/budget").then(function (res) {
-                    for (var i = 0; i < res.data.myBudget.length; i++) {
-                        dataSource.datasets[0].data[i] =
-                            res.data.myBudget[i].budget;
-                        dataSource.labels[i] = res.data.myBudget[i].title;
-                        createChart();
-                    }
-                });
+                axios
+                    .get("http://localhost:3000/new-budget-endpoint")
+                    .then(function (res) {
+                        console.log(res.data);
+                        for (var i = 0; i < res.data.myBudget.length; i++) {
+                            dataSource.datasets[0].data[i] =
+                                res.data.myBudget[i].budget;
+                            dataSource.labels[i] = res.data.myBudget[i].title;
+                            createChart();
+                        }
+                    });
             }
 
             getPersonalBudget();
